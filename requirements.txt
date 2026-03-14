@@ -1,2 +1,21 @@
+# Core ML/AI
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Deep Learning (uncomment as needed)
+# tensorflow>=2.15.0
+# torch>=2.1.0
+
+# Jupyter
 ipykernel
+jupyter
+
+# Utilities
 python-dotenv
+tqdm>=4.65.0
+
+# Data Processing
+openpyxl>=3.1.0
