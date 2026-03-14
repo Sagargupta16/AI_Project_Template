@@ -1,0 +1,49 @@
+[project]
+name = "ai-project-template"
+version = "0.2.0"
+description = "A comprehensive template for machine learning and AI projects"
+requires-python = ">=3.13"
+license = "MIT"
+
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    "python-dotenv",
+    "tqdm>=4.67",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+jupyter = [
+    "ipykernel",
+    "jupyter",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=6.0",
+    "ruff>=0.9",
+    "pre-commit>=4.0",
+]
+deep-learning = [
+    "torch>=2.5",
+]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
