@@ -146,7 +146,7 @@ requires-dist = [
     { name = "tiktoken", marker = "extra == 'llm'", specifier = ">=0.8" },
     { name = "torch", marker = "extra == 'dl'", specifier = ">=2.5" },
     { name = "tqdm", specifier = ">=4.67" },
-    { name = "uvicorn", extras = ["standard"], marker = "extra == 'api'", specifier = ">=0.32" },
+    { name = "uvicorn", extras = ["standard"], marker = "extra == 'api'", specifier = ">=0.44.0" },
 ]
 provides-extras = ["ml", "dl", "llm", "rag", "agents", "eval", "api", "jupyter", "dev", "all"]
 
