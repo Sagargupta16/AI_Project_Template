@@ -60,7 +60,7 @@ eval = [
 # Web API
 api = [
     "fastapi>=0.115",
-    "uvicorn[standard]>=0.32",
+    "uvicorn[standard]>=0.44.0",
     "httpx>=0.27",
 ]
 
