@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from src.dataset import preprocess_data
+from src.ml.dataset import preprocess_data
 
 
 def test_preprocess_drops_duplicates():

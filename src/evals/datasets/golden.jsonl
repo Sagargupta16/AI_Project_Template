@@ -1,0 +1,2 @@
+{"id": "ex-001", "input": "What is the capital of France?", "expected": "Paris", "tags": ["factual"]}
+{"id": "ex-002", "input": "Summarize in one sentence: The sky is blue because of Rayleigh scattering.", "expected": "The sky is blue due to Rayleigh scattering.", "tags": ["summarization"]}

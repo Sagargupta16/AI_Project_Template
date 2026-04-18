@@ -5,9 +5,10 @@ from pathlib import Path
 
 import joblib
 import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
-from src.config import Config
+from src.core.config import Settings, get_settings
 
 logger = logging.getLogger(__name__)
 
@@ -15,23 +16,20 @@ logger = logging.getLogger(__name__)
 def train_model(
     df: pd.DataFrame,
     target_column: str = "target",
-    config: Config | None = None,
+    settings: Settings | None = None,
 ):
     """Train a model on the given data. Returns the trained model."""
-    config = config or Config()
+    settings = settings or get_settings()
     logger.info("Training model on %d samples", len(df))
 
     X = df.drop(columns=[target_column])
     y = df[target_column]
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=config.test_size, random_state=config.random_seed
+        X, y, test_size=settings.ml.test_size, random_state=settings.ml.random_seed
     )
 
-    # Replace with your model of choice
-    from sklearn.ensemble import RandomForestClassifier
-
-    model = RandomForestClassifier(random_state=config.random_seed)
+    model = RandomForestClassifier(random_state=settings.ml.random_seed)
     model.fit(X_train, y_train)
 
     score = model.score(X_test, y_test)

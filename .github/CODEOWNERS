@@ -1,2 +1,16 @@
-* @Sagargupta16
-# v1
+# Default owner for everything in the repo
+*                         @Sagargupta16
+
+# Domain ownership - extend as the team grows
+/src/ml/                  @Sagargupta16
+/src/rag/                 @Sagargupta16
+/src/agents/              @Sagargupta16
+/src/prompts/             @Sagargupta16
+/src/evals/               @Sagargupta16
+/src/api/                 @Sagargupta16
+
+# Guard the CI and config surface
+/.github/                 @Sagargupta16
+/pyproject.toml           @Sagargupta16
+/Dockerfile               @Sagargupta16
+/Makefile                 @Sagargupta16

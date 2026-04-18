@@ -1,146 +1,116 @@
 # AI Project Template
 
-A comprehensive template for machine learning and AI projects, designed for reproducibility and maintainable code structure.
+A unified Python starter for **every AI use case** — classical ML, deep learning, LLM apps, RAG, and agents. One layout, optional extras, opinionated tooling.
 
-## Features
+## Why this template
 
-- Organized directory structure following data science best practices
-- Modular source code with config, data loading, feature engineering, and modeling
-- Jupyter Notebook integration for exploratory analysis
-- Pre-configured linting (Ruff) and pre-commit hooks
-- CI/CD with GitHub Actions
-- Docker support for reproducible environments
-- Makefile for common development tasks
+Most AI templates pick a niche. Cookiecutter Data Science assumes sklearn + notebooks. Production RAG templates assume a FastAPI service with a vector store. This template assumes **your project will span several of those** (ML model → RAG retriever → agent tool → API) and gives each concern its own home without forcing you to install frameworks you don't need.
 
-## Project Structure
-
-```
-AI_Project_Template/
-├── data/                   # Data directory
-│   ├── external/           # External data sources
-│   ├── interim/            # Intermediate processed data
-│   ├── processed/          # Final processed data for modeling
-│   └── raw/                # Raw, immutable data
-├── models/                 # Trained model files
-├── notebooks/              # Jupyter notebooks for exploration
-├── references/             # Documentation and reference materials
-├── reports/                # Generated reports
-│   └── figures/            # Generated graphics and figures
-├── src/                    # Source code
-│   ├── modeling/
-│   │   ├── predict.py      # Prediction pipeline
-│   │   └── train.py        # Training pipeline
-│   ├── services/           # External service integrations
-│   ├── config.py           # Configuration management
-│   ├── dataset.py          # Data loading and preprocessing
-│   ├── features.py         # Feature engineering
-│   ├── logging_config.py   # Logging setup
-│   ├── plots.py            # Visualization utilities
-│   └── utils.py            # General utilities
-├── tests/                  # Test suite
-├── pyproject.toml          # Project metadata and tool config
-├── requirements.txt        # Python dependencies
-├── requirements-dev.txt    # Development dependencies
-├── Makefile                # Common dev commands
-├── Dockerfile              # Container setup
-└── docker-compose.yml      # Multi-service setup
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Python 3.13+
-- Git
-
-### Setup
+## Quick start
 
 ```bash
-# Clone and enter the project
-git clone <your-repo-url>
-cd AI_Project_Template
+# Install uv (https://docs.astral.sh/uv/)
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Create and activate virtual environment
-python -m venv .venv
-source .venv/bin/activate  # Linux/macOS
-# .venv\Scripts\activate   # Windows
+# Install base + the extras you need
+make setup                                    # base only
+uv sync --extra ml --extra llm --extra rag    # targeted
+make dev                                      # everything
 
-# Install dependencies
-make setup
-# or: pip install -r requirements.txt && pip install -r requirements-dev.txt
-
-# Install pre-commit hooks
-make pre-commit
+# Run
+make test              # tests
+make api               # FastAPI dev server on :8000
+make eval              # offline evals on the golden dataset
+make notebook          # Jupyter
 ```
 
-### Quick Start
+## Extras
 
-1. Add your raw data to `data/raw/`
-2. Explore in `notebooks/` with Jupyter
-3. Implement data processing in `src/dataset.py`
-4. Define configuration in `src/config.py`
-5. Build your model in `src/modeling/train.py`
+Base install is deliberately lean — just `pydantic`, `pydantic-settings`, `python-dotenv`, `tqdm`. Everything heavy is an opt-in extra:
 
-### Example Usage
+| Extra | Adds | Use when |
+|-------|------|----------|
+| `ml` | numpy, pandas, sklearn, matplotlib | Classical ML, data science |
+| `dl` | torch | Deep learning |
+| `llm` | anthropic, openai, tiktoken | Calling LLMs |
+| `rag` | chromadb, sentence-transformers, langchain splitters | Building RAG |
+| `agents` | langgraph, pydantic-ai | Agent frameworks |
+| `eval` | arize-phoenix, langsmith | Tracing + evaluation |
+| `api` | fastapi, uvicorn, httpx | Serving a web API |
+| `jupyter` | jupyter, ipykernel | Notebooks |
+| `dev` | pytest, ruff, mypy, pre-commit | Development |
+| `all` | everything above | Kitchen sink |
 
-```python
-from src.config import Config
-from src.dataset import load_data, preprocess_data
-from src.features import build_features
-from src.modeling.train import train_model, save_model
-
-config = Config()
-
-# Load and process data
-raw_data = load_data(config.raw_data_dir / "data.csv")
-clean_data = preprocess_data(raw_data)
-features = build_features(clean_data)
-
-# Train and save model
-model = train_model(features, target_column="target", config=config)
-save_model(model, config.models_dir / "trained_model.pkl")
-```
-
-## Available Commands
-
-Run `make help` to see all commands:
+## Project layout
 
 ```
-clean                Remove build artifacts and caches
-dev                  Install project in editable mode with all extras
-format               Format code with ruff
-lint                 Run ruff linter
-lint-fix             Run ruff linter with auto-fix
-notebook             Launch Jupyter notebook server
-pre-commit           Install pre-commit hooks
-setup                Install project dependencies
-test                 Run tests with pytest
-test-cov             Run tests with coverage
+ai-project-template/
+  src/
+    core/          # config (pydantic-settings), logging, utils
+    ml/            # classical ML + DL: dataset, features, train, predict
+    rag/           # chunking, indexing, retrieval
+    agents/        # LLM-driven loops (plan -> tool-call -> observe)
+    workflows/     # deterministic LLM pipelines (chaining, routing)
+    tools/         # stateless callables agents invoke
+    prompts/       # versioned templates + registry
+    evals/         # datasets/, offline/, judges/
+    guardrails/    # input/output filters around LLM calls
+    observability/ # OTel tracing, cost tracking, feedback
+    services/      # business logic, DB, external APIs
+    api/           # FastAPI entrypoint + routers
+  tests/           # unit/ + integration/
+  notebooks/       # numbered exploratory notebooks
+  data/            # raw/ interim/ processed/ external/
+  models/          # trained artifacts (gitignored)
+  docker/          # Dockerfiles for per-service builds
+  AGENTS.md        # canonical spec for coding agents
+  CLAUDE.md        # points at AGENTS.md (Claude Code)
+  pyproject.toml   # deps, ruff, pytest, mypy
+  Makefile         # uv-based command interface
 ```
 
-## Data Management
+## The three-bucket rule
 
-- **Never** modify files in `data/raw/` -- keep raw data immutable
-- Document data transformations in notebooks
-- For large datasets, use [DVC](https://dvc.org) or store outside the repository
+The most common confusion in AI projects is **where does X go?** This template enforces a clear split:
 
-## Development Guidelines
+- **`agents/`** — LLM loops. Decides what to do next.
+- **`tools/`** — stateless callables an agent invokes. Pure input → output.
+- **`services/`** — business logic, DB, external APIs. No LLM control flow.
+- **`workflows/`** — deterministic pipelines that call LLMs on a fixed path.
 
-- Add `from __future__ import annotations` to all Python files
-- Use type hints for all function signatures
-- Follow PEP 8 (enforced by Ruff)
-- Name notebooks with numbers for ordering: `01_data_exploration.ipynb`
-- Move reusable code from notebooks to `src/` modules
+If you feel the urge to put an LLM loop in `services/`, stop and move it to `agents/`.
 
-## Testing
+## Configuration
 
-```bash
-make test          # Run tests
-make test-cov      # Run tests with HTML coverage report
-```
+Single source of truth: [`src/core/config.py`](src/core/config.py). Loaded via `get_settings()` (cached). Override everything through environment variables — see [`.env.example`](.env.example). Nested settings use `__` as delimiter: `LLM__MODEL=claude-opus-4-7` or the flat prefix form `LLM_MODEL=claude-opus-4-7`.
+
+## Evaluation
+
+Golden dataset lives in [`src/evals/datasets/golden.jsonl`](src/evals/datasets/golden.jsonl). Offline runners in [`src/evals/offline/`](src/evals/offline/). Judges (exact match, LLM-as-judge) in [`src/evals/judges/`](src/evals/judges/). Graduate to a managed registry (MLflow / LangSmith / Langfuse) when you scale.
+
+## Observability
+
+`src/observability/` wraps:
+- **Tracing** — OpenTelemetry, backend-agnostic (Phoenix, LangSmith, MLflow Tracing).
+- **Cost tracking** — aggregate LLM spend per run and per model.
+- **Feedback** — capture thumbs-up/down from users for online evals.
+
+Call `setup_tracing()` once at app boot. Don't scatter instrumentation across business logic.
+
+## Data management
+
+- `data/raw/` is **immutable**. Never modify it.
+- Derived artifacts go to `data/interim/` or `data/processed/`.
+- Large data belongs outside the repo (DVC, S3). Pre-commit blocks files >5MB.
+
+## Tooling
+
+- **uv** for deps and commands. Everything goes through `uv run ...`.
+- **Ruff** (line 120, py313, rules `E F W I UP B SIM`) for lint + format.
+- **pytest** with async auto-mode and `pytest-cov`.
+- **mypy** configured; not enforced in CI yet.
+- **pre-commit** with ruff + large-file / merge-conflict hooks.
 
 ## License
 
-MIT License - see the [LICENCE](LICENCE) file for details.
-
-Based on [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/) by DrivenData.
+MIT — see [LICENCE](LICENCE).

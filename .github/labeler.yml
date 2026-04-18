@@ -1,0 +1,74 @@
+ml:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/ml/**
+          - src/evals/**
+
+rag:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/rag/**
+
+agents:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/agents/**
+          - src/tools/**
+          - src/workflows/**
+
+prompts:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/prompts/**
+
+api:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/api/**
+
+observability:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/observability/**
+
+guardrails:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/guardrails/**
+
+core:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/core/**
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - tests/**
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - README.md
+          - AGENTS.md
+          - CLAUDE.md
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**
+          - .pre-commit-config.yaml
+
+docker:
+  - changed-files:
+      - any-glob-to-any-file:
+          - Dockerfile
+          - .dockerignore
+          - docker-compose.yml
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - pyproject.toml
+          - uv.lock

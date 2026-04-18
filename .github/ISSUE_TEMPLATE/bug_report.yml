@@ -1,0 +1,49 @@
+name: Bug report
+description: Report a bug in the template
+labels: [bug, triage]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Clear description of the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      description: Minimal steps to reproduce. Include commands, config, and any relevant code.
+      placeholder: |
+        1. Run `make setup`
+        2. Run `make test`
+        3. See error ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Python version, uv version, and relevant extras installed.
+      placeholder: |
+        - OS: Ubuntu 24.04
+        - Python: 3.13.2
+        - uv: 0.5.0
+        - Extras: ml, llm
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / traceback
+      render: shell

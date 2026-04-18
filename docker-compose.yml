@@ -1,14 +1,16 @@
 services:
-  app:
+  api:
     build: .
-    container_name: ai_project
+    container_name: ai_api
+    ports:
+      - "8000:8000"
     volumes:
       - ./data:/app/data
       - ./models:/app/models
-    environment:
-      - PYTHONUNBUFFERED=1
     env_file:
       - .env
+    environment:
+      - PYTHONUNBUFFERED=1
 
   notebook:
     build: .
@@ -19,8 +21,7 @@ services:
       - ./data:/app/data
       - ./models:/app/models
       - ./notebooks:/app/notebooks
-    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
-    environment:
-      - PYTHONUNBUFFERED=1
+      - ./src:/app/src
     env_file:
       - .env
+    command: uv run jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
