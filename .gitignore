@@ -94,3 +94,9 @@ target/
 
 # exclude data from source control by default
 # /data/
+# Added for consistency
+.env.local
+.env.*.local
+Thumbs.db
+*.pyc
+venv/
