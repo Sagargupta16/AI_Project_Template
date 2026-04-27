@@ -8,8 +8,8 @@ readme = "README.md"
 
 # Base: lean core. Everything heavy is an optional extra.
 dependencies = [
-    "pydantic>=2.9",
-    "pydantic-settings>=2.6",
+    "pydantic>=2.13.3",
+    "pydantic-settings>=2.14.0",
     "python-dotenv>=1.0",
     "tqdm>=4.67",
 ]
@@ -20,7 +20,7 @@ ml = [
     "numpy>=2.0",
     "pandas>=2.2",
     "scikit-learn>=1.5",
-    "matplotlib>=3.9",
+    "matplotlib>=3.10.9",
     "seaborn>=0.13",
     "openpyxl>=3.1",
     "joblib>=1.4",
@@ -33,7 +33,7 @@ dl = [
 
 # LLM clients
 llm = [
-    "anthropic>=0.40",
+    "anthropic>=0.97.0",
     "openai>=1.55",
     "tiktoken>=0.8",
 ]
@@ -47,19 +47,19 @@ rag = [
 
 # Agents: frameworks + tool infra
 agents = [
-    "langgraph>=0.2",
-    "pydantic-ai>=0.0.13",
+    "langgraph>=1.1.9",
+    "pydantic-ai>=1.87.0",
 ]
 
 # Evaluation + observability
 eval = [
-    "arize-phoenix>=6.0",
-    "langsmith>=0.2",
+    "arize-phoenix>=14.15.0",
+    "langsmith>=0.7.37",
 ]
 
 # Web API
 api = [
-    "fastapi>=0.115",
+    "fastapi>=0.136.1",
     "uvicorn[standard]>=0.32",
     "httpx>=0.27",
 ]
@@ -75,9 +75,9 @@ dev = [
     "pytest>=8.0",
     "pytest-cov>=6.0",
     "pytest-asyncio>=0.24",
-    "ruff>=0.9",
-    "pre-commit>=4.0",
-    "mypy>=1.13",
+    "ruff>=0.15.12",
+    "pre-commit>=4.6.0",
+    "mypy>=1.20.2",
 ]
 
 # Convenience: install everything
