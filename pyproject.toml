@@ -1,6 +1,6 @@
 [project]
 name = "ai-project-template"
-version = "0.3.0"
+version = "0.3.1"
 description = "Unified Python template for ML, LLM, RAG, and agent projects"
 requires-python = ">=3.13"
 license = "MIT"
@@ -93,6 +93,18 @@ dev = [
 # Convenience: install everything
 all = [
     "ai-project-template[ml,dl,llm,rag,agents,eval,api,jupyter,dev]",
+]
+
+[tool.uv]
+# Security floors for transitive deps (Dependabot alerts). Constraints only
+# apply when the package is pulled in by something else; they are not deps.
+# cryptography: GHSA Bleichenbacher oracle in PKCS#7 decryption (< 50.0.0)
+# h2: duplicate Host header request smuggling (<= 4.4.0)
+# tornado: multipart DoS + cookie injection fix (< 6.5.8)
+constraint-dependencies = [
+    "cryptography>=50.0.0",
+    "h2>=4.4.1",
+    "tornado>=6.5.8",
 ]
 
 [build-system]

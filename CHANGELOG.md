@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.1] - 2026-09-02
+
+### Security
+- Add `[tool.uv] constraint-dependencies` floors for vulnerable transitive deps and re-lock:
+  - `cryptography` 49.0.0 -> 50.0.1 (high, Bleichenbacher oracle in PKCS#7 EnvelopedData decryption, Dependabot #94)
+  - `h2` 4.4.0 -> 4.4.1 (medium, duplicate Host header request smuggling, Dependabot #95)
+  - `tornado` 6.5.7 -> 6.5.8 (medium multipart DoS #97, low `set_cookie` attribute injection #96)
+
 ## [3.0.0] - 2026-04-18
 
 Major restructure for any AI workload (ML, DL, LLM, RAG, agents).
